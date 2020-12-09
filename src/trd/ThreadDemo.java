@@ -1,5 +1,5 @@
 package trd;
-class Hi extends Thread{
+class Hi implements Runnable{
     public void run(){
     for(int i=0; i<5; i++){
         System.out.println("hi");
@@ -10,7 +10,7 @@ class Hi extends Thread{
         }
     }
 }}
-class Hello extends Thread{
+class Hello implements Runnable{
     public void run(){
         for(int i=0; i<5; i++){
             System.out.println("hello");
@@ -24,9 +24,22 @@ class Hello extends Thread{
 
 public class ThreadDemo {
     public static void main(String[] args) {
- Hi obj1 = new Hi();
- Hello obj2 = new Hello();
- obj1.start();
- obj2.start();
+// Hi obj1 = new Hi();//working
+// Hello obj2 = new Hello();//working
+
+ Runnable obj1 = new Hi();
+ Runnable obj2 = new Hello();
+
+Thread t1 = new Thread(obj1);
+Thread t2 = new Thread(obj2);
+
+
+ t1.start();
+        try {
+            Thread.sleep(101);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        t2.start();
     }
 }
